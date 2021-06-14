@@ -26,14 +26,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/fragment_a_btn" />
 
-    <LinearLayout
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_viewport"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/fragment_a_btn"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteX="140dp"></LinearLayout>
+        tools:layout_editor_absoluteX="140dp">
+
+    </androidx.fragment.app.FragmentContainerView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,23 +1,26 @@
 package com.sap.androidAcademy
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-class FragmentA : Fragment() {
+class FragmentA : LoggingFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d(getLogTag(), "onCreateView")
         return inflater.inflate(R.layout.fragment_a, container, false)
     }
 
-    companion object {
+    override fun getLogTag(): String = "Fragment A"
 
-        val LOG_TAG = "FragmentA"
+    companion object {
 
         @JvmStatic
         fun newInstance() =

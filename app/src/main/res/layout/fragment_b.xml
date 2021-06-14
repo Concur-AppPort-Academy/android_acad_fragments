@@ -11,10 +11,4 @@
         android:layout_height="match_parent"
         android:text="Fragment B" />
 
-    <EditText
-        android:layout_marginTop="8dp"
-        android:id="@+id/editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
 </FrameLayout>

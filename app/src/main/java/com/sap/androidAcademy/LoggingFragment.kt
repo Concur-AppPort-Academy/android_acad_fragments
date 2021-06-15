@@ -11,6 +11,8 @@ open class LoggingFragment: Fragment() {
 
     open fun getLogTag(): String = "LoggingFragment"
 
+    val observer = LoggingLifecycleObserver(getLogTag())
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.d(getLogTag(), "onCreate")
@@ -66,11 +68,22 @@ open class LoggingFragment: Fragment() {
 
     override fun onAttach(context: Context) {
         Log.d(getLogTag(), "onAttach")
+        lifecycle.addObserver(observer)
         super.onAttach(context)
     }
 
     override fun onDetach() {
         Log.d(getLogTag(), "onDetach")
+        lifecycle.removeObserver(observer)
         super.onDetach()
     }
+}
+
+class LoggingLifecycleObserver(val logTag: String): LifecycleObserver {
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
+    fun onEvent(owner: LifecycleOwner) {
+        Log.d(logTag, "Lifecycle observer reports : ${owner.lifecycle.currentState}")
+    }
+
 }

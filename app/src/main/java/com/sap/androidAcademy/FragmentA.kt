@@ -8,11 +8,23 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.fragment.app.activityViewModels
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
+
+const val MY_REQUEST_KEY = "MY_REQ_KEY"
+const val MY_BUNDLE_KEY = "MY_BUNDLE_KEY"
 
 class FragmentA : LoggingFragment() {
 
-    private val viewModel:FragmentViewModel by activityViewModels()
+    private var result = "initial";
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setFragmentResultListener(MY_REQUEST_KEY) { _, bundle ->
+            result = bundle.getString(MY_BUNDLE_KEY, "empty")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,14 +37,15 @@ class FragmentA : LoggingFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<Button>(R.id.save_btn).setOnClickListener {
-            view.findViewById<TextView>(R.id.textView).text = view.findViewById<EditText>(R.id.editText).text.toString()
-            viewModel.setStringValue(view.findViewById<EditText>(R.id.editText).text.toString())
+            val text = view.findViewById<EditText>(R.id.editText).text.toString()
+            view.findViewById<TextView>(R.id.textView).text = "I typed $text"
+            setFragmentResult(MY_REQUEST_KEY, bundleOf(MY_BUNDLE_KEY to text))
         }
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d(getLogTag(), "Variable is : ${viewModel.retrieveValue()}")
+        Log.d(getLogTag(), "Variable is : $result")
     }
 
     override fun getLogTag(): String = "Fragment A"
